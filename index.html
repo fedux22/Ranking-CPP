@@ -275,6 +275,7 @@
         .text-primary { color: #0369A1; font-weight: 600; font-size: 18px; }
         .text-accent { color: #F97316; font-weight: 600; font-size: 18px; }
         .texto-pequeno { font-size: 12px; color: #64748b; margin-top: 10px; }
+        .aviso { background: #fef3c7; padding: 8px; border-radius: 8px; text-align:center; font-weight:500; margin-bottom:15px; color:#92400e; }
 
         @media (max-width: 768px) {
             .grid-lista { grid-template-columns: 1fr; }
@@ -349,6 +350,7 @@
         <!-- SECCIÓN: CARGA DE DATOS -->
         <section id="carga" class="tab-content card hidden">
             <h2><i class="fa fa-pen-to-square"></i> Registrar Capturas</h2>
+            <div class="aviso">ℹ️ Podés cargar hora por hora cuando quieras, se suma automáticamente a lo guardado.</div>
             <div class="fila-form">
                 <div style="flex:1; min-width:200px;">
                     <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Seleccionar Etapa</label>
@@ -361,7 +363,7 @@
             </div>
 
             <div id="horasContainer" class="grid-horas"></div>
-            <button id="btnGuardarCapturas" class="btn-secundario">💾 Guardar Registro</button>
+            <button id="btnGuardarCapturas" class="btn-secundario">💾 Guardar Registro / Sumar</button>
         </section>
 
         <!-- SECCIÓN: RESULTADOS POR ETAPA -->
@@ -420,8 +422,25 @@
         let etapas = [];
         let capturas = {};
 
-        // REGLAS DE COEFICIENTES SEGÚN TU EXPLICACIÓN
-        const coeficientesBase = { 1: 0.0001, 2: 0.0002, 3: 0.0003, 4: 0.0004, 5: 0.0005 };
+        // ✅ COEFICIENTES SEGÚN TU REGLA EXACTA
+        // Puesto desde el último hacia arriba : Coeficiente acumulado
+        const coeficientes = {
+            1: 0.0001, // Último
+            2: 0.0003, // 1 + 2
+            3: 0.0006, // 1 + 2 + 3
+            4: 0.0010, // 1 + 2 + 3 + 4
+            5: 0.0015, // 1 + 2 + 3 + 4 + 5
+            6: 0.0021,
+            7: 0.0028,
+            8: 0.0036,
+            9: 0.0045,
+            10: 0.0055,
+            11: 0.0066,
+            12: 0.0078,
+            13: 0.0091,
+            14: 0.0105,
+            15: 0.0120
+        };
 
         // ELEMENTOS DOM
         const tabs = document.querySelectorAll('.tab-btn');
@@ -496,7 +515,7 @@
             if(nom) {
                 const id = Date.now().toString();
                 etapas.push({id, nombre: nom, horas: hrs});
-                capturas[id] = [];
+                capturas[id] = []; // Iniciamos el registro vacío
                 actualizarListaEtapas();
                 actualizarSelectores();
                 guardarEnLocal();
@@ -522,13 +541,14 @@
         }
 
         // --------------------------
-        // CARGA DE HORAS
+        // CARGA DE HORAS (CARGA PARCIAL / SUMA)
         // --------------------------
         etapaSel.addEventListener('change', () => {
             const etapa = etapas.find(e => e.id === etapaSel.value);
             horasContainer.innerHTML = '';
             if(!etapa) return;
 
+            // Creamos los campos para cada hora
             for(let i=1; i<=etapa.horas; i++) {
                 const div = document.createElement('div');
                 div.className = "hora-item";
@@ -540,30 +560,64 @@
             }
         });
 
+        pescadorSel.addEventListener('change', () => {
+            // Si cambia el pescador, mostramos lo que ya tiene cargado para modificar o sumar
+            const idEtapa = etapaSel.value;
+            const pesc = pescadorSel.value;
+            if(!idEtapa || !pesc) return;
+            
+            const registroExistente = capturas[idEtapa].find(r => r.pescador === pesc);
+            if(registroExistente) {
+                for(let i=1; i<=3; i++) {
+                    const input = document.querySelector(`input[data-hora="${i}"]`);
+                    if(input && registroExistente[`h${i}`] !== undefined) {
+                        input.value = registroExistente[`h${i}`];
+                    }
+                }
+            } else {
+                // Si no tiene nada, ponemos todo en 0
+                document.querySelectorAll('input[data-hora]').forEach(inp => inp.value = 0);
+            }
+        });
+
         btnGuardarCapturas.addEventListener('click', () => {
             const idEtapa = etapaSel.value;
             const pesc = pescadorSel.value;
             if(!idEtapa || !pesc) return alert('⚠️ Complete los datos');
 
             const etapa = etapas.find(e => e.id === idEtapa);
-            const horas = {};
+            const horasNuevas = {};
+            
+            // Leemos lo ingresado ahora
             document.querySelectorAll('.input-bonito[data-hora]').forEach(inp => {
-                horas[`h${inp.dataset.hora}`] = parseInt(inp.value) || 0;
+                horasNuevas[`h${inp.dataset.hora}`] = parseInt(inp.value) || 0;
             });
 
-            const total = Object.values(horas).reduce((a,b) => a+b, 0);
-            const registro = { pescador: pesc, ...horas, total };
-
+            // 👉 LÓGICA DE SUMA: Si ya existe, sumamos lo nuevo a lo viejo, sino creamos
+            let registroFinal = { pescador: pesc, h1:0, h2:0, h3:0 };
             const idx = capturas[idEtapa].findIndex(r => r.pescador === pesc);
-            idx >=0 ? capturas[idEtapa][idx] = registro : capturas[idEtapa].push(registro);
+            
+            if(idx >= 0) {
+                // Ya existe: SUMAMOS
+                registroFinal.h1 = capturas[idEtapa][idx].h1 + horasNuevas.h1;
+                registroFinal.h2 = capturas[idEtapa][idx].h2 + horasNuevas.h2;
+                registroFinal.h3 = capturas[idEtapa][idx].h3 + horasNuevas.h3;
+                capturas[idEtapa][idx] = registroFinal;
+            } else {
+                // Es nuevo: Guardamos directo
+                registroFinal = {...registroFinal, ...horasNuevas};
+                capturas[idEtapa].push(registroFinal);
+            }
+
+            // Recalculamos el TOTAL
+            registroFinal.total = registroFinal.h1 + registroFinal.h2 + registroFinal.h3;
 
             guardarEnLocal();
-            etapaSel.value = ''; pescadorSel.value = ''; horasContainer.innerHTML = '';
-            alert('✅ Guardado correctamente');
+            alert('✅ Guardado / Sumado correctamente');
         });
 
         // --------------------------
-        // LÓGICA DE DESEMPATE Y PUESTOS CON TU SISTEMA DE PUNTAJES
+        // LÓGICA DE PUNTAJES CORREGIDA AL 100%
         // --------------------------
         etapaClasifSel.addEventListener('change', () => {
             const idEtapa = etapaClasifSel.value;
@@ -572,6 +626,8 @@
             const etapa = etapas.find(e => e.id === idEtapa);
             let datos = [...capturas[idEtapa]];
             const totalParticipantes = datos.length;
+
+            if(totalParticipantes === 0) return;
 
             // 1. ORDENAMIENTO DE MAYOR A MENOR (REGLAS DE DESEMPATE)
             datos.sort((a,b) => {
@@ -601,23 +657,14 @@
                 }
 
                 // 👉 CÁLCULO SEGÚN TU REGLA EXACTA 👈
-                // Puesto desde abajo: Ej: si hay 5 y estoy en puesto 1 (el mejor), desde abajo es 5
-                const posicionDesdeAbajo = totalParticipantes - puestoActual + 1;
+                // Parte Entera = Cantidad total - (Puesto - 1)
+                const parteEntera = totalParticipantes - (puestoActual - 1);
                 
-                // Obtener coeficiente base para esa posición
-                const coefBase = coeficientesBase[posicionDesdeAbajo] || 0.0001;
-
-                // Suma acumulada de coeficientes anteriores
-                let sumaCoeficientes = 0;
-                for(let k = 1; k <= posicionDesdeAbajo; k++) {
-                    sumaCoeficientes += (coeficientesBase[k] || 0.0001);
-                }
-
-                // El entero es directamente la posición desde abajo
-                const parteEntera = posicionDesdeAbajo;
-
-                // Punto final: Entero + Suma de coeficientes
-                const puntosFinales = parteEntera + sumaCoeficientes;
+                // Buscamos el coeficiente: Puesto desde el último = Parte Entera
+                const coef = coeficientes[parteEntera] || 0.0001; // Si hay más de 15, usamos el último valor base
+                
+                // Punto final: Entero + Coeficiente
+                const puntosFinales = parteEntera + coef;
 
                 resultadoFinal.push({...datos[i], puesto: puestoActual, puntos: puntosFinales});
             }
@@ -654,6 +701,8 @@
 
             etapas.forEach(et => {
                 let datosEtapa = [...capturas[et.id]];
+                if(datosEtapa.length === 0) return;
+
                 datosEtapa.sort((a,b) => {
                     if(b.total !== a.total) return b.total - a.total;
                     const ultH = et.horas === 3 ? 'h3' : 'h2';
@@ -676,15 +725,8 @@
                     }
                     
                     // MISMA LÓGICA DE CÁLCULO PARA LA GENERAL
-                    const posicionDesdeAbajo = totalParticipantes - puestoActual + 1;
-                    const coefBase = coeficientesBase[posicionDesdeAbajo] || 0.0001;
-                    
-                    let sumaCoeficientes = 0;
-                    for(let k = 1; k <= posicionDesdeAbajo; k++) {
-                        sumaCoeficientes += (coeficientesBase[k] || 0.0001);
-                    }
-                    
-                    const puntosFinales = posicionDesdeAbajo + sumaCoeficientes;
+                    const parteEntera = totalParticipantes - (puestoActual - 1);
+                    const puntosFinales = parteEntera + (coeficientes[parteEntera] || 0.0001);
 
                     if(acumulado[datosEtapa[i].pescador]) {
                         acumulado[datosEtapa[i].pescador].total += puntosFinales;
