@@ -3,21 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Torneo de Pesca</title>
+    <title>Torneo de Pesca - Sistema Corregido</title>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #7dd3fc 100%);
+            min-height: 100vh;
+            color: #0f172a;
+            padding: 20px 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* CABECERA */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .icono-principal {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #0369A1, #0E7490);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 15px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .subtitulo {
+            color: #475569;
+            font-size: 18px;
+        }
+
+        /* MENÚ DE PESTAÑAS */
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            padding: 12px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 12px 18px;
+            border: none;
+            background: transparent;
+            color: #334155;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.9);
+        }
+
+        .tab-btn.activa {
+            background: white;
+            color: #0369A1;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        /* TARJETAS / CARDS */
+        .card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid #bae6fd;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #0369A1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* FORMULARIOS Y BOTONES */
+        .fila-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .input-bonito {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #7dd3fc;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-bonito:focus {
+            border-color: #0369A1;
+            box-shadow: 0 0 0 3px rgba(3, 105, 161, 0.15);
+        }
+
+        .btn-primario {
+            padding: 12px 24px;
+            background: #0369A1;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+        .btn-primario:hover {
+            background: #0284c7;
+            transform: scale(1.02);
+        }
+
+        .btn-secundario {
+            padding: 12px 24px;
+            background: #0E7490;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+        .btn-secundario:hover {
+            background: #0891b2;
+            transform: scale(1.02);
+        }
+
+        /* LISTAS */
+        .contenedor-lista {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .grid-lista {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .item-lista {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            list-style: none;
+        }
+
+        /* HORAS */
+        .grid-horas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            background: #f0f9ff;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .hora-item {
+            text-align: center;
+        }
+
+        .hora-item label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        /* TABLAS */
+        .tabla-contenedor {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #bae6fd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        table thead {
+            background: linear-gradient(135deg, #0369A1, #0E7490);
+            color: white;
+        }
+
+        table th, table td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #e0f2fe;
+            background: rgba(255,255,255,0.7);
+        }
+
+        table th {
+            font-weight: 600;
+        }
+
+        table tbody tr:hover td {
+            background: #f0f9ff;
+        }
+
+        .puesto-1 td { background: #fef3c7; font-weight: 600; }
+        .puesto-2 td { background: #e2e8f0; font-weight: 600; }
+        .puesto-3 td { background: #fed7aa; font-weight: 600; }
+
+        .tabla-general thead {
+            background: linear-gradient(135deg, #F97316, #ea580c);
+        }
+
+        /* UTILIDADES */
+        .hidden { display: none; }
+        .text-center { text-align: center; }
+        .text-primary { color: #0369A1; font-weight: 600; font-size: 18px; }
+        .text-accent { color: #F97316; font-weight: 600; font-size: 18px; }
+        .texto-pequeno { font-size: 12px; color: #64748b; margin-top: 10px; }
+
+        @media (max-width: 768px) {
+            .grid-lista { grid-template-columns: 1fr; }
+            .grid-horas { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <!-- CABECERA -->
         <header class="header">
             <div class="icono-principal"><i class="fa fa-fish"></i></div>
             <h1>Torneo de Pesca</h1>
-            <p class="subtitulo">Sistema Profesional de Gesti贸n y Clasificaci贸n</p>
+            <p class="subtitulo">Sistema Profesional de Gestión y Clasificación</p>
         </header>
 
+        <!-- MENÚ -->
         <div class="menu">
             <button class="tab-btn activa" data-tab="pescadores">
                 <i class="fa fa-users"></i> Participantes
@@ -32,10 +306,11 @@
                 <i class="fa fa-table"></i> Resultados Etapa
             </button>
             <button class="tab-btn" data-tab="general">
-                <i class="fa fa-trophy"></i> Clasificaci贸n General
+                <i class="fa fa-trophy"></i> Clasificación General
             </button>
         </div>
 
+        <!-- SECCIÓN: PESCADORES -->
         <section id="pescadores" class="tab-content card">
             <h2><i class="fa fa-user-plus"></i> Agregar Pescador</h2>
             <div class="fila-form">
@@ -47,6 +322,7 @@
             </div>
         </section>
 
+        <!-- SECCIÓN: ETAPAS -->
         <section id="etapas" class="tab-content card hidden">
             <h2><i class="fa fa-calendar-plus"></i> Nueva Etapa</h2>
             <div class="fila-form">
@@ -55,7 +331,7 @@
                     <input type="text" id="nombreEtapa" placeholder="Ej: Etapa Inaugural" class="input-bonito" style="width:100%;">
                 </div>
                 <div style="flex:1; min-width:200px;">
-                    <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Duraci贸n</label>
+                    <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Duración</label>
                     <select id="horasEtapa" class="input-bonito" style="width:100%;">
                         <option value="2">2 Horas</option>
                         <option value="3">3 Horas</option>
@@ -70,6 +346,7 @@
             </div>
         </section>
 
+        <!-- SECCIÓN: CARGA DE DATOS -->
         <section id="carga" class="tab-content card hidden">
             <h2><i class="fa fa-pen-to-square"></i> Registrar Capturas</h2>
             <div class="fila-form">
@@ -84,11 +361,12 @@
             </div>
 
             <div id="horasContainer" class="grid-horas"></div>
-            <button id="btnGuardarCapturas" class="btn-secundario">馃捑 Guardar Registro</button>
+            <button id="btnGuardarCapturas" class="btn-secundario">💾 Guardar Registro</button>
         </section>
 
+        <!-- SECCIÓN: RESULTADOS POR ETAPA -->
         <section id="resultados_etapa" class="tab-content card hidden">
-            <h2><i class="fa fa-table"></i> Clasificaci贸n por Etapa</h2>
+            <h2><i class="fa fa-table"></i> Clasificación por Etapa</h2>
             <div style="margin-bottom:20px;">
                 <select id="etapaClasifSel" class="input-bonito" style="max-width:200px;"><option value="">-- Ver Etapa --</option></select>
             </div>
@@ -110,11 +388,12 @@
                     </tbody>
                 </table>
             </div>
-            <p class="texto-pequeno">馃搶 Desempate: Mayor captura en 脷ltima Hora 鉃?Hora 2 鉃?Hora 1. Empate total = mismo puesto y salto de posici贸n.</p>
+            <p class="texto-pequeno">📌 Desempate: Mayor captura en Última Hora ➜ Hora 2 ➜ Hora 1. Empate total = mismo puesto y salto de posición.</p>
         </section>
 
+        <!-- SECCIÓN: GENERAL -->
         <section id="general" class="tab-content card hidden">
-            <h2 style="color:#F97316;"><i class="fa fa-trophy"></i> Clasificaci贸n General</h2>
+            <h2 style="color:#F97316;"><i class="fa fa-trophy"></i> Clasificación General</h2>
             <div class="tabla-contenedor">
                 <table class="tabla-general">
                     <thead>
@@ -133,6 +412,332 @@
         </section>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // --------------------------
+        // DATOS
+        // --------------------------
+        let pescadores = [];
+        let etapas = [];
+        let capturas = {};
+
+        // REGLAS DE COEFICIENTES SEGÚN TU EXPLICACIÓN
+        const coeficientesBase = { 1: 0.0001, 2: 0.0002, 3: 0.0003, 4: 0.0004, 5: 0.0005 };
+
+        // ELEMENTOS DOM
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contenidos = document.querySelectorAll('.tab-content');
+
+        const inombrePescador = document.getElementById('nombrePescador');
+        const btnAgregarPescador = document.getElementById('btnAgregarPescador');
+        const listaPescadores = document.getElementById('listaPescadores');
+
+        const inombreEtapa = document.getElementById('nombreEtapa');
+        const ihorasEtapa = document.getElementById('horasEtapa');
+        const btnCrearEtapa = document.getElementById('btnCrearEtapa');
+        const listaEtapas = document.getElementById('listaEtapas');
+
+        const etapaSel = document.getElementById('etapaSel');
+        const pescadorSel = document.getElementById('pescadorSel');
+        const horasContainer = document.getElementById('horasContainer');
+        const btnGuardarCapturas = document.getElementById('btnGuardarCapturas');
+
+        const etapaClasifSel = document.getElementById('etapaClasifSel');
+        const tablaClasifEtapa = document.getElementById('tablaClasifEtapa');
+        const tablaGeneral = document.getElementById('tablaGeneral');
+
+        // --------------------------
+        // NAVEGACIÓN
+        // --------------------------
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('activa'));
+                contenidos.forEach(c => c.classList.add('hidden'));
+                tab.classList.add('activa');
+                document.getElementById(tab.dataset.tab).classList.remove('hidden');
+            });
+        });
+
+        // --------------------------
+        // CARGA INICIAL
+        // --------------------------
+        cargarDeLocal();
+        actualizarSelectores();
+
+        // --------------------------
+        // PESCADORES
+        // --------------------------
+        btnAgregarPescador.addEventListener('click', () => {
+            const nom = inombrePescador.value.trim();
+            if(nom) {
+                pescadores.push(nom);
+                actualizarListaPescadores();
+                actualizarSelectores();
+                guardarEnLocal();
+                inombrePescador.value = '';
+            }
+        });
+
+        function actualizarListaPescadores() {
+            listaPescadores.innerHTML = '';
+            pescadores.forEach(n => {
+                const li = document.createElement('li');
+                li.className = "item-lista";
+                li.textContent = n;
+                listaPescadores.appendChild(li);
+            });
+        }
+
+        // --------------------------
+        // ETAPAS
+        // --------------------------
+        btnCrearEtapa.addEventListener('click', () => {
+            const nom = inombreEtapa.value.trim();
+            const hrs = parseInt(ihorasEtapa.value);
+            if(nom) {
+                const id = Date.now().toString();
+                etapas.push({id, nombre: nom, horas: hrs});
+                capturas[id] = [];
+                actualizarListaEtapas();
+                actualizarSelectores();
+                guardarEnLocal();
+                inombreEtapa.value = '';
+            }
+        });
+
+        function actualizarListaEtapas() {
+            listaEtapas.innerHTML = '';
+            etapas.forEach(e => {
+                const div = document.createElement('div');
+                div.style.background='white';
+                div.style.padding='10px 14px';
+                div.style.borderRadius='8px';
+                div.style.marginBottom='8px';
+                div.style.display='flex';
+                div.style.justifyContent='space-between';
+                div.style.alignItems='center';
+                div.style.boxShadow='0 2px 4px rgba(0,0,0,0.05)';
+                div.innerHTML = `<span style="font-weight:500">${e.nombre}</span> <span style="font-size:12px; color:#64748b">⏱️ ${e.horas} horas</span>`;
+                listaEtapas.appendChild(div);
+            });
+        }
+
+        // --------------------------
+        // CARGA DE HORAS
+        // --------------------------
+        etapaSel.addEventListener('change', () => {
+            const etapa = etapas.find(e => e.id === etapaSel.value);
+            horasContainer.innerHTML = '';
+            if(!etapa) return;
+
+            for(let i=1; i<=etapa.horas; i++) {
+                const div = document.createElement('div');
+                div.className = "hora-item";
+                div.innerHTML = `
+                    <label>Hora ${i}</label>
+                    <input type="number" min="0" value="0" class="input-bonito text-center" style="width:100%" data-hora="${i}">
+                `;
+                horasContainer.appendChild(div);
+            }
+        });
+
+        btnGuardarCapturas.addEventListener('click', () => {
+            const idEtapa = etapaSel.value;
+            const pesc = pescadorSel.value;
+            if(!idEtapa || !pesc) return alert('⚠️ Complete los datos');
+
+            const etapa = etapas.find(e => e.id === idEtapa);
+            const horas = {};
+            document.querySelectorAll('.input-bonito[data-hora]').forEach(inp => {
+                horas[`h${inp.dataset.hora}`] = parseInt(inp.value) || 0;
+            });
+
+            const total = Object.values(horas).reduce((a,b) => a+b, 0);
+            const registro = { pescador: pesc, ...horas, total };
+
+            const idx = capturas[idEtapa].findIndex(r => r.pescador === pesc);
+            idx >=0 ? capturas[idEtapa][idx] = registro : capturas[idEtapa].push(registro);
+
+            guardarEnLocal();
+            etapaSel.value = ''; pescadorSel.value = ''; horasContainer.innerHTML = '';
+            alert('✅ Guardado correctamente');
+        });
+
+        // --------------------------
+        // LÓGICA DE DESEMPATE Y PUESTOS CON TU SISTEMA DE PUNTAJES
+        // --------------------------
+        etapaClasifSel.addEventListener('change', () => {
+            const idEtapa = etapaClasifSel.value;
+            if(!idEtapa) return tablaClasifEtapa.innerHTML = '<tr><td colspan="7" class="text-center" style="color:#94a3b8;">Seleccione una etapa</td></tr>';
+
+            const etapa = etapas.find(e => e.id === idEtapa);
+            let datos = [...capturas[idEtapa]];
+            const totalParticipantes = datos.length;
+
+            // 1. ORDENAMIENTO DE MAYOR A MENOR (REGLAS DE DESEMPATE)
+            datos.sort((a,b) => {
+                if(b.total !== a.total) return b.total - a.total;
+                const ultH = etapa.horas === 3 ? 'h3' : 'h2';
+                if(b[ultH] !== a[ultH]) return b[ultH] - a[ultH];
+                if(b.h2 !== a.h2) return b.h2 - a.h2;
+                return b.h1 - a.h1;
+            });
+
+            // 2. ASIGNACIÓN DE PUESTOS (CON SALTO POR EMPATE)
+            let resultadoFinal = [];
+            let puestoActual = 1;
+
+            for(let i=0; i<datos.length; i++) {
+                if(i > 0) {
+                    const ant = datos[i-1];
+                    const act = datos[i];
+                    const ultH = etapa.horas === 3 ? 'h3' : 'h2';
+                    
+                    // Si hay empate total, mismo puesto
+                    if(act.total === ant.total && act[ultH] === ant[ultH] && act.h2 === ant.h2 && act.h1 === ant.h1) {
+                        puestoActual = resultadoFinal[i-1].puesto;
+                    } else {
+                        puestoActual = i + 1;
+                    }
+                }
+
+                // 👉 CÁLCULO SEGÚN TU REGLA EXACTA 👈
+                // Puesto desde abajo: Ej: si hay 5 y estoy en puesto 1 (el mejor), desde abajo es 5
+                const posicionDesdeAbajo = totalParticipantes - puestoActual + 1;
+                
+                // Obtener coeficiente base para esa posición
+                const coefBase = coeficientesBase[posicionDesdeAbajo] || 0.0001;
+
+                // Suma acumulada de coeficientes anteriores
+                let sumaCoeficientes = 0;
+                for(let k = 1; k <= posicionDesdeAbajo; k++) {
+                    sumaCoeficientes += (coeficientesBase[k] || 0.0001);
+                }
+
+                // El entero es directamente la posición desde abajo
+                const parteEntera = posicionDesdeAbajo;
+
+                // Punto final: Entero + Suma de coeficientes
+                const puntosFinales = parteEntera + sumaCoeficientes;
+
+                resultadoFinal.push({...datos[i], puesto: puestoActual, puntos: puntosFinales});
+            }
+
+            // 3. PINTAR TABLA
+            tablaClasifEtapa.innerHTML = '';
+            resultadoFinal.forEach(res => {
+                const fila = document.createElement('tr');
+                if(res.puesto === 1) fila.className = "puesto-1";
+                if(res.puesto === 2) fila.className = "puesto-2";
+                if(res.puesto === 3) fila.className = "puesto-3";
+
+                fila.innerHTML = `
+                    <td class="text-center" style="font-size:18px; font-weight:bold;">${res.puesto}</td>
+                    <td style="font-weight:500;">${res.pescador}</td>
+                    <td class="text-center">${res.h1}</td>
+                    <td class="text-center">${res.h2 || '-'}</td>
+                    <td class="text-center">${res.h3 || '-'}</td>
+                    <td class="text-center text-primary">${res.total}</td>
+                    <td class="text-center" style="font-family:monospace; color:#0E7490; font-weight:600;">${res.puntos.toFixed(4)}</td>
+                `;
+                tablaClasifEtapa.appendChild(fila);
+            });
+
+            actualizarClasificacionGeneral();
+        });
+
+        // --------------------------
+        // CLASIFICACIÓN GENERAL
+        // --------------------------
+        function actualizarClasificacionGeneral() {
+            let acumulado = {};
+            pescadores.forEach(p => acumulado[p] = { total: 0, detalle: [] });
+
+            etapas.forEach(et => {
+                let datosEtapa = [...capturas[et.id]];
+                datosEtapa.sort((a,b) => {
+                    if(b.total !== a.total) return b.total - a.total;
+                    const ultH = et.horas === 3 ? 'h3' : 'h2';
+                    if(b[ultH] !== a[ultH]) return b[ultH] - a[ultH];
+                    if(b.h2 !== a.h2) return b.h2 - a.h2;
+                    return b.h1 - a.h1;
+                });
+
+                const totalParticipantes = datosEtapa.length;
+                let puestoActual = 1;
+                
+                for(let i=0; i<datosEtapa.length; i++) {
+                    if(i>0) {
+                        const ant = datosEtapa[i-1];
+                        const act = datosEtapa[i];
+                        const ultH = et.horas === 3 ? 'h3' : 'h2';
+                        if(!(act.total === ant.total && act[ultH] === ant[ultH] && act.h2 === ant.h2 && act.h1 === ant.h1)) {
+                            puestoActual = i+1;
+                        }
+                    }
+                    
+                    // MISMA LÓGICA DE CÁLCULO PARA LA GENERAL
+                    const posicionDesdeAbajo = totalParticipantes - puestoActual + 1;
+                    const coefBase = coeficientesBase[posicionDesdeAbajo] || 0.0001;
+                    
+                    let sumaCoeficientes = 0;
+                    for(let k = 1; k <= posicionDesdeAbajo; k++) {
+                        sumaCoeficientes += (coeficientesBase[k] || 0.0001);
+                    }
+                    
+                    const puntosFinales = posicionDesdeAbajo + sumaCoeficientes;
+
+                    if(acumulado[datosEtapa[i].pescador]) {
+                        acumulado[datosEtapa[i].pescador].total += puntosFinales;
+                        acumulado[datosEtapa[i].pescador].detalle.push(`${et.nombre}:${puntosFinales.toFixed(4)}`);
+                    }
+                }
+            });
+
+            const ranking = Object.entries(acumulado)
+                .map(([nombre, datos]) => ({nombre, ...datos}))
+                .sort((a,b) => a.total - b.total);
+
+            tablaGeneral.innerHTML = '';
+            ranking.forEach((pos, idx) => {
+                const fila = document.createElement('tr');
+                if(idx === 0) fila.className = "puesto-1";
+                fila.innerHTML = `
+                    <td class="text-center" style="font-size:18px; font-weight:bold;">${idx+1}</td>
+                    <td style="font-weight:500;">${pos.nombre}</td>
+                    <td class="text-center text-accent">${pos.total.toFixed(4)}</td>
+                    <td style="font-size:12px; color:#475569;">${pos.detalle.join(' | ') || '-'}</td>
+                `;
+                tablaGeneral.appendChild(fila);
+            });
+        }
+
+        // --------------------------
+        // UTILIDADES
+        // --------------------------
+        function actualizarSelectores() {
+            [etapaSel, etapaClasifSel].forEach(s => {
+                s.innerHTML = '<option value="">-- Seleccionar --</option>';
+                etapas.forEach(e => { const o = new Option(e.nombre, e.id); s.add(o); });
+            });
+            pescadorSel.innerHTML = '<option value="">-- Seleccionar --</option>';
+            pescadores.forEach(p => { const o = new Option(p, p); pescadorSel.add(o); });
+        }
+
+        function guardarEnLocal() {
+            localStorage.setItem('torneoPescaData', JSON.stringify({pescadores, etapas, capturas}));
+        }
+
+        function cargarDeLocal() {
+            const d = localStorage.getItem('torneoPescaData');
+            if(d) {
+                const obj = JSON.parse(d);
+                pescadores = obj.pescadores || [];
+                etapas = obj.etapas || [];
+                capturas = obj.capturas || {};
+                actualizarListaPescadores();
+                actualizarListaEtapas();
+            }
+        }
+    </script>
 </body>
 </html>
