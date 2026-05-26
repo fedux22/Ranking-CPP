@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Torneo de Pesca - Sistema Corregido</title>
+    <title>SISTEMA COPENLI - Torneo de Pesca</title>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,14 +18,14 @@
         }
 
         body {
-            background: linear-gradient(135deg, #f0f9ff 0%, #7dd3fc 100%);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             min-height: 100vh;
             color: #0f172a;
             padding: 20px 15px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -33,737 +33,827 @@
         .header {
             text-align: center;
             margin-bottom: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-bottom: 3px solid #0f766e;
         }
 
-        .icono-principal {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #0369A1, #0E7490);
+        .logo-principal {
+            width: 90px;
+            height: 90px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0f766e, #115e59);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 36px;
             margin: 0 auto 15px;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
         }
 
         h1 {
-            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
             font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 8px;
+            color: #134e4a;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
         }
 
         .subtitulo {
             color: #475569;
-            font-size: 18px;
+            font-size: 16px;
+            font-weight: 500;
         }
 
-        /* MENÚ DE PESTAÑAS */
+        /* MENÚ */
         .menu {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(10px);
+            background: white;
             padding: 12px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            border: 1px solid #cbd5e1;
         }
 
         .tab-btn {
-            padding: 12px 18px;
+            padding: 12px 20px;
             border: none;
             background: transparent;
             color: #334155;
-            font-weight: 500;
-            border-radius: 12px;
+            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 15px;
+            transition: all 0.2s ease;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
         .tab-btn:hover {
-            background: rgba(255,255,255,0.9);
+            background: #f1f5f9;
         }
 
         .tab-btn.activa {
-            background: white;
-            color: #0369A1;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            background: #134e4a;
+            color: white;
+            box-shadow: 0 2px 8px rgba(15, 118, 110, 0.2);
         }
 
-        /* TARJETAS / CARDS */
+        /* TARJETAS */
         .card {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            padding: 28px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            border: 1px solid #bae6fd;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
             margin-bottom: 20px;
         }
 
         .card h2 {
-            font-size: 22px;
-            font-weight: 600;
-            color: #0369A1;
+            font-size: 20px;
+            font-weight: 700;
+            color: #134e4a;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 8px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 10px;
         }
 
-        /* FORMULARIOS Y BOTONES */
+        .card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #334155;
+            margin: 15px 0 10px;
+        }
+
+        /* FORMULARIOS */
         .fila-form {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            align-items: center;
         }
 
-        .input-bonito {
+        .grupo-campo {
             flex: 1;
-            min-width: 200px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: 1px solid #7dd3fc;
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s ease;
-            background: white;
+            min-width: 180px;
         }
 
-        .input-bonito:focus {
-            border-color: #0369A1;
-            box-shadow: 0 0 0 3px rgba(3, 105, 161, 0.15);
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .input-bonito, select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 14px;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+        }
+
+        .input-bonito:focus, select:focus {
+            outline: none;
+            border-color: #0f766e;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
         }
 
         .btn-primario {
-            padding: 12px 24px;
-            background: #0369A1;
+            padding: 10px 20px;
+            background: #0f766e;
             color: white;
             border: none;
-            border-radius: 12px;
-            font-weight: 500;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 15px;
+            transition: all 0.2s ease;
+            font-size: 14px;
         }
 
         .btn-primario:hover {
-            background: #0284c7;
-            transform: scale(1.02);
+            background: #134e4a;
         }
 
-        .btn-secundario {
-            padding: 12px 24px;
-            background: #0E7490;
+        .btn-peligro {
+            padding: 10px 20px;
+            background: #dc2626;
             color: white;
             border: none;
-            border-radius: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 15px;
-        }
-
-        .btn-secundario:hover {
-            background: #0891b2;
-            transform: scale(1.02);
-        }
-
-        /* LISTAS */
-        .contenedor-lista {
-            background: #f0f9ff;
-            border-radius: 12px;
-            padding: 16px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .grid-lista {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .item-lista {
-            background: white;
-            padding: 10px 14px;
             border-radius: 8px;
-            text-align: center;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            list-style: none;
-        }
-
-        /* HORAS */
-        .grid-horas {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            background: #f0f9ff;
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .hora-item {
-            text-align: center;
-        }
-
-        .hora-item label {
-            display: block;
+            font-weight: 600;
+            cursor: pointer;
             font-size: 14px;
-            font-weight: 500;
-            color: #475569;
-            margin-bottom: 8px;
         }
 
         /* TABLAS */
         .tabla-contenedor {
             overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid #bae6fd;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            margin-top: 10px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         table thead {
-            background: linear-gradient(135deg, #0369A1, #0E7490);
-            color: white;
-        }
-
-        table th, table td {
-            padding: 14px;
-            text-align: left;
-            border-bottom: 1px solid #e0f2fe;
-            background: rgba(255,255,255,0.7);
+            background: #f1f5f9;
         }
 
         table th {
-            font-weight: 600;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 700;
+            color: #334155;
+            border-bottom: 2px solid #cbd5e1;
+            white-space: nowrap;
+        }
+
+        table td {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            background: white;
         }
 
         table tbody tr:hover td {
-            background: #f0f9ff;
+            background: #f8fafc;
         }
 
-        .puesto-1 td { background: #fef3c7; font-weight: 600; }
-        .puesto-2 td { background: #e2e8f0; font-weight: 600; }
-        .puesto-3 td { background: #fed7aa; font-weight: 600; }
+        .estado-pesco { color: #059669; font-weight: 600; }
+        .estado-zapatero { color: #d97706; font-weight: 600; }
+        .estado-abandono { color: #dc2626; font-weight: 600; }
+        .estado-falta { color: #64748b; font-weight: 600; }
 
-        .tabla-general thead {
-            background: linear-gradient(135deg, #F97316, #ea580c);
-        }
+        .puesto-1 td { background: #fef3c7; font-weight: bold; }
+        .puesto-2 td { background: #e5e7eb; font-weight: bold; }
+        .puesto-3 td { background: #fed7aa; font-weight: bold; }
 
         /* UTILIDADES */
         .hidden { display: none !important; }
         .text-center { text-align: center; }
-        .text-primary { color: #0369A1; font-weight: 600; font-size: 18px; }
-        .text-accent { color: #F97316; font-weight: 600; font-size: 18px; }
-        .texto-pequeno { font-size: 12px; color: #64748b; margin-top: 10px; }
-        .aviso { background: #d1fae5; padding: 8px; border-radius: 8px; text-align:center; font-weight:500; margin-bottom:15px; color:#065f46; }
-
-        @media (max-width: 768px) {
-            .grid-lista { grid-template-columns: 1fr; }
+        .text-right { text-align: right; }
+        .resaltado { background: #fef2f2 !important; }
+        .aviso {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 500;
+            margin: 12px 0;
+            font-size: 14px;
         }
+        .aviso-info { background: #e0f2fe; color: #075985; border: 1px solid #bae6fd; }
+        .aviso-peligro { background: #fef2f2; color: #991b1b; border: 1px solid #fecdd3; }
+
+        .grid-categorias {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .tarjeta-cupo {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .cupo-numero { font-size: 22px; font-weight: 700; color: #0f766e; }
     </style>
 </head>
 <body>
     <div class="container">
         <!-- CABECERA -->
         <header class="header">
-            <div class="icono-principal"><i class="fa fa-fish"></i></div>
-            <h1>Torneo de Pesca</h1>
-            <p class="subtitulo">Sistema Profesional de Gestión y Clasificación</p>
+            <div class="logo-principal"><i class="fa fa-shield"></i></div>
+            <h1>SISTEMA COPENLI</h1>
+            <p class="subtitulo">Sistema Profesional de Gestión y Clasificación | Reglamento Oficial</p>
         </header>
 
         <!-- MENÚ -->
         <div class="menu">
-            <button class="tab-btn activa" data-tab="pescadores">
-                <i class="fa fa-users"></i> Participantes
-            </button>
-            <button class="tab-btn" data-tab="etapas">
-                <i class="fa fa-calendar"></i> Etapas
+            <button class="tab-btn activa" data-tab="padron">
+                <i class="fa fa-address-book"></i> Padrón Maestro
             </button>
             <button class="tab-btn" data-tab="carga">
-                <i class="fa fa-pencil-square-o"></i> Cargar Capturas
+                <i class="fa fa-pencil-square-o"></i> Carga de Fecha
             </button>
-            <button class="tab-btn" data-tab="resultados_etapa">
-                <i class="fa fa-table"></i> Resultados Etapa
+            <button class="tab-btn" data-tab="clasificacion">
+                <i class="fa fa-sort-amount-desc"></i> Clasificación Categorías
             </button>
-            <button class="tab-btn" data-tab="general">
-                <i class="fa fa-trophy"></i> Clasificación General
+            <button class="tab-btn" data-tab="clubes">
+                <i class="fa fa-building"></i> Tablero de Clubes
             </button>
         </div>
 
-        <!-- SECCIÓN: PESCADORES -->
-        <section id="pescadores" class="tab-content card">
-            <h2><i class="fa fa-user-plus"></i> Agregar Pescador</h2>
-            <div class="fila-form">
-                <input type="text" id="nombrePescador" placeholder="Escribe el nombre completo..." class="input-bonito">
-                <button id="btnAgregarPescador" class="btn-primario">Guardar Nombre</button>
+        <!-- 1. PADRÓN MAESTRO -->
+        <section id="padron" class="tab-content card">
+            <h2><i class="fa fa-user-plus"></i> Administración de Padrón Maestro</h2>
+            <div class="aviso aviso-info">
+                📋 5 Clubes Oficiales. Límites: Mayores (6), Resto Categorías (2) por Club. Total torneo: 80 pescadores.
             </div>
-            <div class="contenedor-lista">
-                <ul id="listaPescadores" class="grid-lista"></ul>
-            </div>
-        </section>
 
-        <!-- SECCIÓN: ETAPAS -->
-        <section id="etapas" class="tab-content card hidden">
-            <h2><i class="fa fa-calendar-plus"></i> Nueva Etapa</h2>
             <div class="fila-form">
-                <div style="flex:1; min-width:200px;">
-                    <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Nombre de la etapa</label>
-                    <input type="text" id="nombreEtapa" placeholder="Ej: Etapa Inaugural" class="input-bonito" style="width:100%;">
+                <div class="grupo-campo">
+                    <label>Nombre del Competidor</label>
+                    <input type="text" id="nombrePadron" class="input-bonito" placeholder="Apellido y Nombre">
                 </div>
-                <div style="flex:1; min-width:200px;">
-                    <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Duración</label>
-                    <select id="horasEtapa" class="input-bonito" style="width:100%;">
-                        <option value="2">2 Horas</option>
-                        <option value="3">3 Horas</option>
+                <div class="grupo-campo">
+                    <label>Club</label>
+                    <select id="clubPadron" class="input-bonito">
+                        <option value="Club A">Club A</option>
+                        <option value="Club B">Club B</option>
+                        <option value="Club C">Club C</option>
+                        <option value="Club D">Club D</option>
+                        <option value="Club E">Club E</option>
                     </select>
                 </div>
-            </div>
-            <button id="btnCrearEtapa" class="btn-primario">Crear Etapa</button>
-
-            <div style="margin-top:25px;">
-                <h3 style="font-weight:600; color:#334155; margin-bottom:12px;">Calendario</h3>
-                <div id="listaEtapas"></div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: CARGA DE DATOS -->
-        <section id="carga" class="tab-content card hidden">
-            <h2><i class="fa fa-pen-to-square"></i> Registrar / Corregir Capturas</h2>
-            <div class="aviso">ℹ️ Al volver a guardar, se reemplazan los valores anteriores para corregir errores.</div>
-            <div class="fila-form">
-                <div style="flex:1; min-width:200px;">
-                    <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Seleccionar Etapa</label>
-                    <select id="etapaSel" class="input-bonito" style="width:100%;"><option value="">-- Elegir --</option></select>
+                <div class="grupo-campo">
+                    <label>Categoría</label>
+                    <select id="categoriaPadron" class="input-bonito">
+                        <option value="Mayores">Mayores (Máx 6)</option>
+                        <option value="Senior">Senior (Máx 2)</option>
+                        <option value="Master Senior">Master Senior (Máx 2)</option>
+                        <option value="Damas">Damas (Máx 2)</option>
+                        <option value="Juveniles">Juveniles (Máx 2)</option>
+                        <option value="Menores">Menores (Máx 2)</option>
+                    </select>
                 </div>
-                <div style="flex:1; min-width:200px;">
-                    <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Pescador</label>
-                    <select id="pescadorSel" class="input-bonito" style="width:100%;"><option value="">-- Elegir --</option></select>
-                </div>
+                <button id="btnAgregarPadron" class="btn-primario" style="margin-top: 22px;">Guardar</button>
             </div>
 
-            <div id="horasContainer" class="grid-horas"></div>
-            <button id="btnGuardarCapturas" class="btn-secundario">💾 Guardar / Corregir Registro</button>
-        </section>
-
-        <!-- SECCIÓN: RESULTADOS POR ETAPA -->
-        <section id="resultados_etapa" class="tab-content card hidden">
-            <h2><i class="fa fa-table"></i> Clasificación por Etapa</h2>
-            <div style="margin-bottom:20px;">
-                <select id="etapaClasifSel" class="input-bonito" style="max-width:200px;"><option value="">-- Ver Etapa --</option></select>
-            </div>
             <div class="tabla-contenedor">
                 <table>
                     <thead>
                         <tr>
-                            <th class="text-center">Puesto</th>
-                            <th>Pescador</th>
-                            <th class="text-center">Hora 1</th>
-                            <th class="text-center hora-columna h2-col">Hora 2</th>
-                            <th class="text-center hora-columna h3-col">Hora 3</th>
-                            <th class="text-center">Total</th>
-                            <th class="text-center">Puntos</th>
+                            <th>ID</th>
+                            <th>Competidor</th>
+                            <th>Club</th>
+                            <th>Categoría</th>
                         </tr>
                     </thead>
-                    <tbody id="tablaClasifEtapa">
-                        <tr><td colspan="7" class="text-center" style="color:#94a3b8;">Seleccione una etapa</td></tr>
-                    </tbody>
+                    <tbody id="tablaPadron"></tbody>
                 </table>
             </div>
-            <p class="texto-pequeno">📌 Desempate: Mayor captura en Última Hora ➜ Hora 2 ➜ Hora 1. Empate total = mismo puesto y salto de posición.</p>
         </section>
 
-        <!-- SECCIÓN: GENERAL -->
-        <section id="general" class="tab-content card hidden">
-            <h2 style="color:#F97316;"><i class="fa fa-trophy"></i> Clasificación General</h2>
+        <!-- 2. CARGA DE FECHA -->
+        <section id="carga" class="tab-content card hidden">
+            <h2><i class="fa fa-upload"></i> Carga de Día de Competencia</h2>
+            
+            <div class="aviso aviso-info">
+                ⚠️ Control de Cupo Automático: El sistema bloqueará la selección al alcanzar el límite por Club y Categoría.
+            </div>
+
+            <div id="contadorCupos" class="grid-categorias"></div>
+
+            <div id="listaFilasCarga">
+                <!-- FILA BASE PARA CARGA -->
+                <div class="fila-form fila-carga" data-id="1">
+                    <div class="grupo-campo">
+                        <label>Pescador</label>
+                        <select class="pescadorSel input-bonito"></select>
+                    </div>
+                    <div class="grupo-campo">
+                        <label>Hora 1 (Número o AB)</label>
+                        <input type="text" class="h1 input-bonito" placeholder="0, 5, AB">
+                    </div>
+                    <div class="grupo-campo">
+                        <label>Hora 2 (Número o AB)</label>
+                        <input type="text" class="h2 input-carga input-bonito" placeholder="0, 5, AB">
+                    </div>
+                    <div class="grupo-campo">
+                        <label>Hora 3 (Número o AB)</label>
+                        <input type="text" class="h3 input-carga input-bonito" placeholder="0, 5, AB">
+                    </div>
+                    <button class="btn-peligro btn-eliminar" style="margin-top: 22px;">X</button>
+                </div>
+            </div>
+
+            <button id="btnAgregarFila" class="btn-primario">+ Agregar Fila (Máx 80)</button>
+            <button id="btnProcesarFecha" class="btn-primario" style="margin-left: 10px; background-color: #0d9488;">🔄 Procesar Fecha</button>
+        </section>
+
+        <!-- 3. CLASIFICACIÓN POR CATEGORÍA -->
+        <section id="clasificacion" class="tab-content card hidden">
+            <h2><i class="fa fa-trophy"></i> Clasificación Oficial por Categoría</h2>
+            
+            <div id="resultadosCategorias"></div>
+        </section>
+
+        <!-- 4. TABLERO DE CLUBES -->
+        <section id="clubes" class="tab-content card hidden">
+            <h2><i class="fa fa-building-columns"></i> Campeonato por Clubes</h2>
+            
             <div class="tabla-contenedor">
-                <table class="tabla-general">
+                <table>
                     <thead>
                         <tr>
-                            <th class="text-center">Pos</th>
-                            <th>Pescador</th>
-                            <th class="text-center">Total Puntos</th>
+                            <th>Pos</th>
+                            <th>Club</th>
+                            <th>Total Coeficiente</th>
+                            <th>Presentaciones</th>
                             <th>Detalle</th>
                         </tr>
                     </thead>
-                    <tbody id="tablaGeneral">
-                        <tr><td colspan="4" class="text-center" style="color:#94a3b8;">Sin datos</td></tr>
-                    </tbody>
+                    <tbody id="tablaClubes"></tbody>
                 </table>
             </div>
         </section>
     </div>
 
     <script>
-        // --------------------------
-        // DATOS
-        // --------------------------
-        let pescadores = [];
-        let etapas = [];
-        let capturas = {};
-
-        // ✅ COEFICIENTES SEGÚN TU REGLA EXACTA
-        const coeficientes = {
-            1: 0.0001, 2: 0.0003, 3: 0.0006, 4: 0.0010, 5: 0.0015,
-            6: 0.0021, 7: 0.0028, 8: 0.0036, 9: 0.0045, 10: 0.0055,
-            11: 0.0066, 12: 0.0078, 13: 0.0091, 14: 0.0105, 15: 0.0120
+        // ==============================================
+        // CONFIGURACIÓN Y DATOS - REGLAS DE ORO
+        // ==============================================
+        const CLUBES_PERMITIDOS = ["Club A", "Club B", "Club C", "Club D", "Club E"];
+        const LIMITES_CATEGORIA = {
+            "Mayores": 6,
+            "Senior": 2,
+            "Master Senior": 2,
+            "Damas": 2,
+            "Juveniles": 2,
+            "Menores": 2
         };
+
+        let padron = [];
+        let fechaCargada = [];
+        let resultadosProcesados = [];
+        let contadorFilas = 1;
 
         // ELEMENTOS DOM
         const tabs = document.querySelectorAll('.tab-btn');
         const contenidos = document.querySelectorAll('.tab-content');
 
-        const inombrePescador = document.getElementById('nombrePescador');
-        const btnAgregarPescador = document.getElementById('btnAgregarPescador');
-        const listaPescadores = document.getElementById('listaPescadores');
+        // --- PADRÓN ---
+        const nombrePadron = document.getElementById('nombrePadron');
+        const clubPadron = document.getElementById('clubPadron');
+        const categoriaPadron = document.getElementById('categoriaPadron');
+        const btnAgregarPadron = document.getElementById('btnAgregarPadron');
+        const tablaPadron = document.getElementById('tablaPadron');
 
-        const inombreEtapa = document.getElementById('nombreEtapa');
-        const ihorasEtapa = document.getElementById('horasEtapa');
-        const btnCrearEtapa = document.getElementById('btnCrearEtapa');
-        const listaEtapas = document.getElementById('listaEtapas');
+        // --- CARGA ---
+        const listaFilasCarga = document.getElementById('listaFilasCarga');
+        const btnAgregarFila = document.getElementById('btnAgregarFila');
+        const btnProcesarFecha = document.getElementById('btnProcesarFecha');
+        const contadorCupos = document.getElementById('contadorCupos');
 
-        const etapaSel = document.getElementById('etapaSel');
-        const pescadorSel = document.getElementById('pescadorSel');
-        const horasContainer = document.getElementById('horasContainer');
-        const btnGuardarCapturas = document.getElementById('btnGuardarCapturas');
+        // --- RESULTADOS ---
+        const resultadosCategorias = document.getElementById('resultadosCategorias');
+        const tablaClubes = document.getElementById('tablaClubes');
 
-        const etapaClasifSel = document.getElementById('etapaClasifSel');
-        const tablaClasifEtapa = document.getElementById('tablaClasifEtapa');
-        const tablaGeneral = document.getElementById('tablaGeneral');
-
-        // Elementos para ocultar columnas
-        const colH2 = document.querySelectorAll('.h2-col');
-        const colH3 = document.querySelectorAll('.h3-col');
-
-        // --------------------------
+        // ==============================================
         // NAVEGACIÓN
-        // --------------------------
+        // ==============================================
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 tabs.forEach(t => t.classList.remove('activa'));
                 contenidos.forEach(c => c.classList.add('hidden'));
                 tab.classList.add('activa');
                 document.getElementById(tab.dataset.tab).classList.remove('hidden');
+
+                if(tab.dataset.tab === 'carga') actualizarContadoresCupo();
+                if(tab.dataset.tab === 'clasificacion') procesarClasificacion();
+                if(tab.dataset.tab === 'clubes') procesarTableroClubes();
             });
         });
 
-        // --------------------------
-        // CARGA INICIAL
-        // --------------------------
-        cargarDeLocal();
-        actualizarSelectores();
+        // ==============================================
+        // MÓDULO: PADRÓN MAESTRO
+        // ==============================================
+        btnAgregarPadron.addEventListener('click', () => {
+            const nuevo = {
+                id: Date.now(),
+                nombre: nombrePadron.value.trim(),
+                club: clubPadron.value,
+                categoria: categoriaPadron.value
+            };
 
-        // --------------------------
-        // PESCADORES
-        // --------------------------
-        btnAgregarPescador.addEventListener('click', () => {
-            const nom = inombrePescador.value.trim();
-            if(nom) {
-                pescadores.push(nom);
-                actualizarListaPescadores();
-                actualizarSelectores();
-                guardarEnLocal();
-                inombrePescador.value = '';
-            }
-        });
-
-        function actualizarListaPescadores() {
-            listaPescadores.innerHTML = '';
-            pescadores.forEach(n => {
-                const li = document.createElement('li');
-                li.className = "item-lista";
-                li.textContent = n;
-                listaPescadores.appendChild(li);
-            });
-        }
-
-        // --------------------------
-        // ETAPAS
-        // --------------------------
-        btnCrearEtapa.addEventListener('click', () => {
-            const nom = inombreEtapa.value.trim();
-            const hrs = parseInt(ihorasEtapa.value);
-            if(nom) {
-                const id = Date.now().toString();
-                etapas.push({id, nombre: nom, horas: hrs});
-                capturas[id] = [];
-                actualizarListaEtapas();
-                actualizarSelectores();
-                guardarEnLocal();
-                inombreEtapa.value = '';
-            }
-        });
-
-        function actualizarListaEtapas() {
-            listaEtapas.innerHTML = '';
-            etapas.forEach(e => {
-                const div = document.createElement('div');
-                div.style.background='white';
-                div.style.padding='10px 14px';
-                div.style.borderRadius='8px';
-                div.style.marginBottom='8px';
-                div.style.display='flex';
-                div.style.justifyContent='space-between';
-                div.style.alignItems='center';
-                div.style.boxShadow='0 2px 4px rgba(0,0,0,0.05)';
-                div.innerHTML = `<span style="font-weight:500">${e.nombre}</span> <span style="font-size:12px; color:#64748b">⏱️ ${e.horas} horas</span>`;
-                listaEtapas.appendChild(div);
-            });
-        }
-
-        // --------------------------
-        // CARGA DE HORAS (CORREGIR / REEMPLAZAR, NO SUMA)
-        // --------------------------
-        etapaSel.addEventListener('change', () => {
-            const etapa = etapas.find(e => e.id === etapaSel.value);
-            horasContainer.innerHTML = '';
+            if(!nuevo.nombre) return alert("Ingrese nombre del competidor");
             
-            // Ocultar/Mostrar columnas en tabla según horas
-            if(etapa && etapa.horas === 2) {
-                colH3.forEach(c => c.classList.add('hidden'));
-            } else {
-                colH3.forEach(c => c.classList.remove('hidden'));
-            }
+            padron.push(nuevo);
+            actualizarTablaPadron();
+            guardarDatos();
+            nombrePadron.value = "";
+        });
 
-            if(!etapa) return;
-
-            // Creamos campos SÓLO hasta la hora que corresponde
-            for(let i=1; i<=etapa.horas; i++) {
-                const div = document.createElement('div');
-                div.className = "hora-item";
-                div.innerHTML = `
-                    <label>Hora ${i}</label>
-                    <input type="number" min="0" value="0" class="input-bonito text-center" style="width:100%" data-hora="${i}">
+        function actualizarTablaPadron() {
+            tablaPadron.innerHTML = "";
+            padron.forEach(p => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td>${p.id}</td>
+                    <td>${p.nombre}</td>
+                    <td>${p.club}</td>
+                    <td>${p.categoria}</td>
                 `;
-                horasContainer.appendChild(div);
-            }
+                tablaPadron.appendChild(fila);
+            });
+        }
+
+        // ==============================================
+        // MÓDULO: CARGA DE FECHA Y CONTROL DE CUPOS
+        // ==============================================
+        btnAgregarFila.addEventListener('click', () => {
+            if(contadorFilas >= 80) return alert("Máximo 80 competidores por fecha");
+            contadorFilas++;
+
+            const nuevaFila = document.createElement('div');
+            nuevaFila.className = "fila-form fila-carga";
+            nuevaFila.dataset.id = contadorFilas;
+            nuevaFila.innerHTML = `
+                <div class="grupo-campo">
+                    <label>Pescador</label>
+                    <select class="pescadorSel input-bonito"></select>
+                </div>
+                <div class="grupo-campo">
+                    <label>Hora 1 (Número o AB)</label>
+                    <input type="text" class="h1 input-bonito" placeholder="0, 5, AB">
+                </div>
+                <div class="grupo-campo">
+                    <label>Hora 2 (Número o AB)</label>
+                    <input type="text" class="h2 input-bonito" placeholder="0, 5, AB">
+                </div>
+                <div class="grupo-campo">
+                    <label>Hora 3 (Número o AB)</label>
+                    <input type="text" class="h3 input-bonito" placeholder="0, 5, AB">
+                </div>
+                <button class="btn-peligro btn-eliminar" style="margin-top: 22px;">X</button>
+            `;
+            listaFilasCarga.appendChild(nuevaFila);
+
+            nuevaFila.querySelector('.btn-eliminar').addEventListener('click', () => nuevaFila.remove());
+            nuevaFila.querySelector('.pescadorSel').addEventListener('change', actualizarContadoresCupo);
+            
+            actualizarListasDesplegables();
         });
 
-        pescadorSel.addEventListener('change', () => {
-            // Cargar valores existentes para poder corregirlos
-            const idEtapa = etapaSel.value;
-            const pesc = pescadorSel.value;
-            if(!idEtapa || !pesc) return;
-            
-            const registroExistente = capturas[idEtapa].find(r => r.pescador === pesc);
-            if(registroExistente) {
-                document.querySelectorAll('input[data-hora]').forEach(inp => {
-                    const hora = inp.dataset.hora;
-                    inp.value = registroExistente[hora] || 0;
+        function actualizarListasDesplegables() {
+            const filas = document.querySelectorAll('.fila-carga');
+            const seleccionados = Array.from(filas).map(f => f.querySelector('.pescadorSel').value).filter(v => v);
+
+            filas.forEach(fila => {
+                const select = fila.querySelector('.pescadorSel');
+                const valorActual = select.value;
+                
+                select.innerHTML = '<option value="">-- Seleccionar --</option>';
+                
+                // Filtrar disponibles según regla de cupo
+                const disponibles = padron.filter(p => {
+                    // 1. No debe estar ya seleccionado en otra fila
+                    if(seleccionados.includes(p.id.toString()) && p.id.toString() !== valorActual) return false;
+                    
+                    // 2. Contar cuantos hay ya de ese club y categoría
+                    const conteo = {};
+                    filas.forEach(f => {
+                        const val = f.querySelector('.pescadorSel').value;
+                        if(val) {
+                            const pesc = padron.find(pe => pe.id == val);
+                            if(pesc) {
+                                const key = `${pesc.club}-${pesc.categoria}`;
+                                conteo[key] = (conteo[key] || 0) + 1;
+                            }
+                        }
+                    });
+                    
+                    const keyActual = `${p.club}-${p.categoria}`;
+                    return (conteo[keyActual] || 0) < LIMITES_CATEGORIA[p.categoria];
                 });
-            }
-        });
 
-        btnGuardarCapturas.addEventListener('click', () => {
-            const idEtapa = etapaSel.value;
-            const pesc = pescadorSel.value;
-            if(!idEtapa || !pesc) return alert('⚠️ Complete los datos');
+                disponibles.sort((a,b) => a.nombre.localeCompare(b.nombre));
+                disponibles.forEach(p => {
+                    const opt = new Option(`${p.nombre} | ${p.club} | ${p.categoria}`, p.id);
+                    select.add(opt);
+                });
+                select.value = valorActual;
+            });
+        }
 
-            const horasNuevas = {};
-            document.querySelectorAll('.input-bonito[data-hora]').forEach(inp => {
-                horasNuevas[`h${inp.dataset.hora}`] = parseInt(inp.value) || 0;
+        function actualizarContadoresCupo() {
+            const conteo = {};
+            Object.keys(LIMITES_CATEGORIA).forEach(cat => {
+                CLUBES_PERMITIDOS.forEach(club => {
+                    conteo[`${club}-${cat}`] = 0;
+                });
             });
 
-            // ✅ AHORA REEMPLAZA, NO SUMA
-            const idx = capturas[idEtapa].findIndex(r => r.pescador === pesc);
-            const total = Object.values(horasNuevas).reduce((a,b) => a+b, 0);
-            
-            if(idx >= 0) {
-                // Reemplazamos todo el registro
-                capturas[idEtapa][idx] = { pescador: pesc, ...horasNuevas, total };
-            } else {
-                // Creamos nuevo
-                capturas[idEtapa].push({ pescador: pesc, ...horasNuevas, total });
-            }
-
-            guardarEnLocal();
-            alert('✅ Registro guardado / corregido correctamente');
-        });
-
-        // --------------------------
-        // LÓGICA DE PUNTAJES
-        // --------------------------
-        etapaClasifSel.addEventListener('change', () => {
-            const idEtapa = etapaClasifSel.value;
-            if(!idEtapa) {
-                tablaClasifEtapa.innerHTML = '<tr><td colspan="7" class="text-center" style="color:#94a3b8;">Seleccione una etapa</td></tr>';
-                return;
-            }
-
-            const etapa = etapas.find(e => e.id === idEtapa);
-            let datos = [...capturas[idEtapa]];
-            const totalParticipantes = datos.length;
-
-            if(totalParticipantes === 0) return;
-
-            // Ocultar columna Hora 3 si es etapa de 2 horas
-            if(etapa.horas === 2) {
-                colH3.forEach(c => c.classList.add('hidden'));
-            } else {
-                colH3.forEach(c => c.classList.remove('hidden'));
-            }
-
-            // 1. ORDENAMIENTO: Mayor a menor con desempate
-            datos.sort((a,b) => {
-                if(b.total !== a.total) return b.total - a.total;
-                const ultH = etapa.horas === 3 ? 'h3' : 'h2';
-                if(b[ultH] !== a[ultH]) return b[ultH] - a[ultH];
-                if(b.h2 !== a.h2) return b.h2 - a.h2;
-                return b.h1 - a.h1;
+            document.querySelectorAll('.fila-carga .pescadorSel').forEach(sel => {
+                if(sel.value) {
+                    const p = padron.find(x => x.id == sel.value);
+                    if(p) conteo[`${p.club}-${p.categoria}`]++;
+                }
             });
 
-            // 2. ASIGNACIÓN DE PUESTOS Y PUNTOS
-            let resultadoFinal = [];
-            let puestoActual = 1;
+            contadorCupos.innerHTML = "";
+            Object.keys(LIMITES_CATEGORIA).forEach(cat => {
+                const div = document.createElement('div');
+                div.innerHTML = `<h4 style="text-align:center; margin-bottom:8px; color:#134e4a;">${cat}</h4>`;
+                CLUBES_PERMITIDOS.forEach(club => {
+                    const act = conteo[`${club}-${cat}`];
+                    const max = LIMITES_CATEGORIA[cat];
+                    const tarj = document.createElement('div');
+                    tarj.className = "tarjeta-cupo";
+                    tarj.innerHTML = `
+                        <div>${club}</div>
+                        <div class="cupo-numero ${act >= max ? 'resaltado' : ''}">${act}/${max}</div>
+                    `;
+                    div.appendChild(tarj);
+                });
+                contadorCupos.appendChild(div);
+            });
 
-            for(let i=0; i<datos.length; i++) {
-                if(i > 0) {
-                    const ant = datos[i-1];
-                    const act = datos[i];
-                    const ultH = etapa.horas === 3 ? 'h3' : 'h2';
-                    if(!(act.total === ant.total && act[ultH] === ant[ultH] && act.h2 === ant.h2 && act.h1 === ant.h1)) {
-                        puestoActual = i + 1;
-                    }
+            actualizarListasDesplegables();
+        }
+
+        // ==============================================
+        // MOTOR DE CÁLCULO - REGLAS DE ORO
+        // ==============================================
+        btnProcesarFecha.addEventListener('click', () => {
+            fechaCargada = [];
+            let hayError = false;
+
+            document.querySelectorAll('.fila-carga').forEach(fila => {
+                const idSel = fila.querySelector('.pescadorSel').value;
+                if(!idSel) return;
+
+                const p = padron.find(x => x.id == idSel);
+                const h1 = fila.querySelector('.h1').value.trim().toUpperCase();
+                const h2 = fila.querySelector('.h2').value.trim().toUpperCase();
+                const h3 = fila.querySelector('.h3').value.trim().toUpperCase();
+
+                // 1. DETECTAR ESTADO SEGÚN REGLAMENTO
+                let estado, valH1, valH2, valH3, total;
+
+                if(h1 === "AB" || h2 === "AB" || h3 === "AB") {
+                    estado = "ABANDONO";
+                    valH1 = valH2 = valH3 = 0;
+                    total = 0;
+                } else if(h1 === "" && h2 === "" && h3 === "") {
+                    estado = "FALTA";
+                    valH1 = valH2 = valH3 = 0;
+                    total = 0;
+                } else {
+                    valH1 = parseInt(h1) || 0;
+                    valH2 = parseInt(h2) || 0;
+                    valH3 = parseInt(h3) || 0;
+                    total = valH1 + valH2 + valH3;
+
+                    if(total > 0) estado = "PESCÓ";
+                    else estado = "ZAPATERO";
                 }
 
-                // Cálculo exacto: Parte entera = Total - (puesto - 1)
-                const parteEntera = totalParticipantes - (puestoActual - 1);
-                const puntosFinales = parteEntera + (coeficientes[parteEntera] || 0.0001);
+                // 2. ÍNDICE DE DESEMPATE (Ponderado)
+                let indiceDesempate;
+                if(estado === "ABANDONO" || estado === "FALTA") indiceDesempate = -1;
+                else if(estado === "ZAPATERO") indiceDesempate = 0;
+                else indiceDesempate = (valH1 * 1) + (valH2 * 2) + (valH3 * 3); // Más peso a la última hora
 
-                resultadoFinal.push({...datos[i], puesto: puestoActual, puntos: puntosFinales});
-            }
-
-            // 3. PINTAR TABLA
-            tablaClasifEtapa.innerHTML = '';
-            resultadoFinal.forEach(res => {
-                const fila = document.createElement('tr');
-                if(res.puesto === 1) fila.className = "puesto-1";
-                if(res.puesto === 2) fila.className = "puesto-2";
-                if(res.puesto === 3) fila.className = "puesto-3";
-
-                fila.innerHTML = `
-                    <td class="text-center" style="font-size:18px; font-weight:bold;">${res.puesto}</td>
-                    <td style="font-weight:500;">${res.pescador}</td>
-                    <td class="text-center">${res.h1}</td>
-                    <td class="text-center">${res.h2}</td>
-                    <td class="text-center ${etapa.horas === 2 ? 'hidden' : ''}">${res.h3 || 0}</td>
-                    <td class="text-center text-primary">${res.total}</td>
-                    <td class="text-center" style="font-family:monospace; color:#0E7490; font-weight:600;">${res.puntos.toFixed(4)}</td>
-                `;
-                tablaClasifEtapa.appendChild(fila);
+                fechaCargada.push({
+                    ...p,
+                    estado,
+                    h1: valH1, h2: valH2, h3: valH3, total,
+                    indiceDesempate,
+                    puesto: null,
+                    coeficiente: 0,
+                    presentacion: 0
+                });
             });
 
-            actualizarClasificacionGeneral();
-        });
+            if(hayError) return;
 
-        // --------------------------
-        // CLASIFICACIÓN GENERAL (DESCENDENTE: MÁS PUNTOS ARRIBA)
-        // --------------------------
-        function actualizarClasificacionGeneral() {
-            let acumulado = {};
-            pescadores.forEach(p => acumulado[p] = { total: 0, detalle: [] });
+            // ==============================================
+            // ETAPAS DE CLASIFICACIÓN
+            // ==============================================
+            resultadosProcesados = [];
+            const agrupadosPorCat = {};
 
-            etapas.forEach(et => {
-                let datosEtapa = [...capturas[et.id]];
-                if(datosEtapa.length === 0) return;
+            // Agrupar por Categoría
+            fechaCargada.forEach(reg => {
+                if(!agrupadosPorCat[reg.categoria]) agrupadosPorCat[reg.categoria] = [];
+                agrupadosPorCat[reg.categoria].push(reg);
+            });
 
-                datosEtapa.sort((a,b) => {
-                    if(b.total !== a.total) return b.total - a.total;
-                    const ultH = et.horas === 3 ? 'h3' : 'h2';
-                    if(b[ultH] !== a[ultH]) return b[ultH] - a[ultH];
-                    if(b.h2 !== a.h2) return b.h2 - a.h2;
-                    return b.h1 - a.h1;
-                });
-
-                const totalParticipantes = datosEtapa.length;
-                let puestoActual = 1;
+            // PROCESAR CADA GRUPO
+            Object.keys(agrupadosPorCat).forEach(cat => {
+                let lista = agrupadosPorCat[cat];
                 
-                for(let i=0; i<datosEtapa.length; i++) {
-                    if(i>0) {
-                        const ant = datosEtapa[i-1];
-                        const act = datosEtapa[i];
-                        const ultH = et.horas === 3 ? 'h3' : 'h2';
-                        if(!(act.total === ant.total && act[ultH] === ant[ultH] && act.h2 === ant.h2 && act.h1 === ant.h1)) {
-                            puestoActual = i+1;
+                // Filtrar activos (quitar faltas/abandono para cálculo de N)
+                const activos = lista.filter(r => r.estado !== "ABANDONO" && r.estado !== "FALTA");
+                const N = activos.length; // Tamaño real del grupo
+
+                // ORDENAR: Mayor a menor por Índice de Desempate
+                lista.sort((a,b) => b.indiceDesempate - a.indiceDesempate || b.total - a.total);
+
+                // ASIGNAR PUESTOS (Empate Olímpico con Vacantes)
+                let puestoActual = 1;
+                for(let i=0; i<lista.length; i++) {
+                    const reg = lista[i];
+
+                    if(reg.estado === "ABANDONO" || reg.estado === "FALTA") {
+                        reg.puesto = null;
+                        reg.coeficiente = 0;
+                        reg.presentacion = 0;
+                        continue;
+                    }
+
+                    // Comparar con anterior para empate
+                    if(i > 0) {
+                        const ant = lista[i-1];
+                        if(!(reg.indiceDesempate === ant.indiceDesempate && reg.total === ant.total)) {
+                            puestoActual = i + 1;
                         }
                     }
-                    
-                    const parteEntera = totalParticipantes - (puestoActual - 1);
-                    const puntosFinales = parteEntera + (coeficientes[parteEntera] || 0.0001);
 
-                    if(acumulado[datosEtapa[i].pescador]) {
-                        acumulado[datosEtapa[i].pescador].total += puntosFinales;
-                        acumulado[datosEtapa[i].pescador].detalle.push(`${et.nombre}:${puntosFinales.toFixed(4)}`);
-                    }
+                    reg.puesto = puestoActual;
+                    reg.presentacion = 1; // Si tiene puesto, asistió
+
+                    // FÓRMULA COPENLI: Coef = (N - Puesto + 1) / N
+                    reg.coeficiente = (N - reg.puesto + 1) / N;
+                }
+
+                resultadosProcesados = resultadosProcesados.concat(lista);
+            });
+
+            alert("✅ Fecha procesada con éxito según Reglamento COPENLI");
+            guardarDatos();
+        });
+
+        // ==============================================
+        // VISTA: CLASIFICACIÓN POR CATEGORÍA
+        // ==============================================
+        function procesarClasificacion() {
+            resultadosCategorias.innerHTML = "";
+            const agrupadosPorCat = {};
+            
+            resultadosProcesados.forEach(r => {
+                if(!agrupadosPorCat[r.categoria]) agrupadosPorCat[r.categoria] = [];
+                agrupadosPorCat[r.categoria].push(r);
+            });
+
+            Object.keys(agrupadosPorCat).forEach(cat => {
+                const lista = agrupadosPorCat[cat];
+                const div = document.createElement('div');
+                div.className = "card";
+                div.innerHTML = `<h3 style="color:#0f766e; font-size:18px;">${cat} | Total Activos: ${lista.filter(x => x.puesto).length}</h3>`;
+
+                const tabla = document.createElement('div');
+                tabla.className = "tabla-contenedor";
+                tabla.innerHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Puesto</th>
+                                <th>Competidor</th>
+                                <th>Club</th>
+                                <th>H1</th>
+                                <th>H2</th>
+                                <th>H3</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Coef</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                `;
+
+                const tbody = tabla.querySelector('tbody');
+                lista.forEach(res => {
+                    const fila = document.createElement('tr');
+                    if(res.puesto === 1) fila.className = "puesto-1";
+                    if(res.puesto === 2) fila.className = "puesto-2";
+                    if(res.puesto === 3) fila.className = "puesto-3";
+
+                    fila.innerHTML = `
+                        <td class="text-center">${res.puesto || '-'}</td>
+                        <td>${res.nombre}</td>
+                        <td>${res.club}</td>
+                        <td class="text-center">${res.h1}</td>
+                        <td class="text-center">${res.h2}</td>
+                        <td class="text-center">${res.h3}</td>
+                        <td class="text-center">${res.total}</td>
+                        <td class="estado-${res.estado.toLowerCase()}">${res.estado}</td>
+                        <td class="text-right">${res.coeficiente.toFixed(4)}</td>
+                    `;
+                    tbody.appendChild(fila);
+                });
+
+                div.appendChild(tabla);
+                resultadosCategorias.appendChild(div);
+            });
+        }
+
+        // ==============================================
+        // VISTA: TABLERO DE CLUBES
+        // ==============================================
+        function procesarTableroClubes() {
+            const resumenClubes = {};
+            CLUBES_PERMITIDOS.forEach(c => {
+                resumenClubes[c] = { coef: 0, pres: 0, detalle: [] };
+            });
+
+            resultadosProcesados.forEach(r => {
+                if(resumenClubes[r.club]) {
+                    resumenClubes[r.club].coef += r.coeficiente;
+                    resumenClubes[r.club].pres += r.presentacion;
+                    resumenClubes[r.club].detalle.push(`${r.nombre}:${r.coeficiente.toFixed(2)}`);
                 }
             });
 
-            // ✅ ORDEN DESCENDENTE: Mayor puntaje primero
-            const ranking = Object.entries(acumulado)
-                .map(([nombre, datos]) => ({nombre, ...datos}))
-                .sort((a,b) => b.total - a.total); // <-- CAMBIO AQUÍ
+            // Ordenar por coeficiente descendente
+            const ordenados = Object.entries(resumenClubes).sort((a,b) => b[1].coef - a[1].coef);
 
-            tablaGeneral.innerHTML = '';
-            ranking.forEach((pos, idx) => {
+            tablaClubes.innerHTML = "";
+            ordenados.forEach(([club, datos], idx) => {
                 const fila = document.createElement('tr');
-                if(idx === 0 && pos.total > 0) fila.className = "puesto-1"; // El primero es el ganador
-
+                if(idx === 0) fila.className = "puesto-1";
                 fila.innerHTML = `
-                    <td class="text-center" style="font-size:18px; font-weight:bold;">${idx+1}</td>
-                    <td style="font-weight:500;">${pos.nombre}</td>
-                    <td class="text-center text-accent">${pos.total.toFixed(4)}</td>
-                    <td style="font-size:12px; color:#475569;">${pos.detalle.join(' | ') || '-'}</td>
+                    <td class="text-center">${idx+1}</td>
+                    <td><strong>${club}</strong></td>
+                    <td class="text-right">${datos.coef.toFixed(4)}</td>
+                    <td class="text-center">${datos.pres}</td>
+                    <td style="font-size:12px; color:#475569;">${datos.detalle.join(' | ')}</td>
                 `;
-                tablaGeneral.appendChild(fila);
+                tablaClubes.appendChild(fila);
             });
         }
 
-        // --------------------------
-        // UTILIDADES
-        // --------------------------
-        function actualizarSelectores() {
-            [etapaSel, etapaClasifSel].forEach(s => {
-                s.innerHTML = '<option value="">-- Seleccionar --</option>';
-                etapas.forEach(e => { const o = new Option(e.nombre, e.id); s.add(o); });
-            });
-            pescadorSel.innerHTML = '<option value="">-- Seleccionar --</option>';
-            pescadores.forEach(p => { const o = new Option(p, p); pescadorSel.add(o); });
+        // ==============================================
+        // ALMACENAMIENTO
+        // ==============================================
+        function guardarDatos() {
+            localStorage.setItem('COPENLI_DATA', JSON.stringify({ padron, fechaCargada, resultadosProcesados }));
         }
 
-        function guardarEnLocal() {
-            localStorage.setItem('torneoPescaData', JSON.stringify({pescadores, etapas, capturas}));
-        }
-
-        function cargarDeLocal() {
-            const d = localStorage.getItem('torneoPescaData');
+        function cargarDatos() {
+            const d = localStorage.getItem('COPENLI_DATA');
             if(d) {
                 const obj = JSON.parse(d);
-                pescadores = obj.pescadores || [];
-                etapas = obj.etapas || [];
-                capturas = obj.capturas || {};
-                actualizarListaPescadores();
-                actualizarListaEtapas();
+                padron = obj.padron || [];
+                fechaCargada = obj.fechaCargada || [];
+                resultadosProcesados = obj.resultadosProcesados || [];
+                actualizarTablaPadron();
             }
         }
+
+        // INICIO
+        cargarDatos();
     </script>
 </body>
 </html>
