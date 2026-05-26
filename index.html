@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torneo de Pesca</title>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="icono-principal"><i class="fa fa-fish"></i></div>
+            <h1>Torneo de Pesca</h1>
+            <p class="subtitulo">Sistema Profesional de Gesti贸n y Clasificaci贸n</p>
+        </header>
+
+        <div class="menu">
+            <button class="tab-btn activa" data-tab="pescadores">
+                <i class="fa fa-users"></i> Participantes
+            </button>
+            <button class="tab-btn" data-tab="etapas">
+                <i class="fa fa-calendar"></i> Etapas
+            </button>
+            <button class="tab-btn" data-tab="carga">
+                <i class="fa fa-pencil-square-o"></i> Cargar Capturas
+            </button>
+            <button class="tab-btn" data-tab="resultados_etapa">
+                <i class="fa fa-table"></i> Resultados Etapa
+            </button>
+            <button class="tab-btn" data-tab="general">
+                <i class="fa fa-trophy"></i> Clasificaci贸n General
+            </button>
+        </div>
+
+        <section id="pescadores" class="tab-content card">
+            <h2><i class="fa fa-user-plus"></i> Agregar Pescador</h2>
+            <div class="fila-form">
+                <input type="text" id="nombrePescador" placeholder="Escribe el nombre completo..." class="input-bonito">
+                <button id="btnAgregarPescador" class="btn-primario">Guardar Nombre</button>
+            </div>
+            <div class="contenedor-lista">
+                <ul id="listaPescadores" class="grid-lista"></ul>
+            </div>
+        </section>
+
+        <section id="etapas" class="tab-content card hidden">
+            <h2><i class="fa fa-calendar-plus"></i> Nueva Etapa</h2>
+            <div class="fila-form">
+                <div style="flex:1; min-width:200px;">
+                    <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Nombre de la etapa</label>
+                    <input type="text" id="nombreEtapa" placeholder="Ej: Etapa Inaugural" class="input-bonito" style="width:100%;">
+                </div>
+                <div style="flex:1; min-width:200px;">
+                    <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Duraci贸n</label>
+                    <select id="horasEtapa" class="input-bonito" style="width:100%;">
+                        <option value="2">2 Horas</option>
+                        <option value="3">3 Horas</option>
+                    </select>
+                </div>
+            </div>
+            <button id="btnCrearEtapa" class="btn-primario">Crear Etapa</button>
+
+            <div style="margin-top:25px;">
+                <h3 style="font-weight:600; color:#334155; margin-bottom:12px;">Calendario</h3>
+                <div id="listaEtapas"></div>
+            </div>
+        </section>
+
+        <section id="carga" class="tab-content card hidden">
+            <h2><i class="fa fa-pen-to-square"></i> Registrar Capturas</h2>
+            <div class="fila-form">
+                <div style="flex:1; min-width:200px;">
+                    <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Seleccionar Etapa</label>
+                    <select id="etapaSel" class="input-bonito" style="width:100%;"><option value="">-- Elegir --</option></select>
+                </div>
+                <div style="flex:1; min-width:200px;">
+                    <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Pescador</label>
+                    <select id="pescadorSel" class="input-bonito" style="width:100%;"><option value="">-- Elegir --</option></select>
+                </div>
+            </div>
+
+            <div id="horasContainer" class="grid-horas"></div>
+            <button id="btnGuardarCapturas" class="btn-secundario">馃捑 Guardar Registro</button>
+        </section>
+
+        <section id="resultados_etapa" class="tab-content card hidden">
+            <h2><i class="fa fa-table"></i> Clasificaci贸n por Etapa</h2>
+            <div style="margin-bottom:20px;">
+                <select id="etapaClasifSel" class="input-bonito" style="max-width:200px;"><option value="">-- Ver Etapa --</option></select>
+            </div>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="text-center">Puesto</th>
+                            <th>Pescador</th>
+                            <th class="text-center">Hora 1</th>
+                            <th class="text-center">Hora 2</th>
+                            <th class="text-center">Hora 3</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-center">Puntos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaClasifEtapa">
+                        <tr><td colspan="7" class="text-center" style="color:#94a3b8;">Seleccione una etapa</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="texto-pequeno">馃搶 Desempate: Mayor captura en 脷ltima Hora 鉃?Hora 2 鉃?Hora 1. Empate total = mismo puesto y salto de posici贸n.</p>
+        </section>
+
+        <section id="general" class="tab-content card hidden">
+            <h2 style="color:#F97316;"><i class="fa fa-trophy"></i> Clasificaci贸n General</h2>
+            <div class="tabla-contenedor">
+                <table class="tabla-general">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Pos</th>
+                            <th>Pescador</th>
+                            <th class="text-center">Total Puntos</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaGeneral">
+                        <tr><td colspan="4" class="text-center" style="color:#94a3b8;">Sin datos</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
