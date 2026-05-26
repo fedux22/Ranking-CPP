@@ -208,7 +208,7 @@
         /* HORAS */
         .grid-horas {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 15px;
             background: #f0f9ff;
             padding: 16px;
@@ -270,16 +270,15 @@
         }
 
         /* UTILIDADES */
-        .hidden { display: none; }
+        .hidden { display: none !important; }
         .text-center { text-align: center; }
         .text-primary { color: #0369A1; font-weight: 600; font-size: 18px; }
         .text-accent { color: #F97316; font-weight: 600; font-size: 18px; }
         .texto-pequeno { font-size: 12px; color: #64748b; margin-top: 10px; }
-        .aviso { background: #fef3c7; padding: 8px; border-radius: 8px; text-align:center; font-weight:500; margin-bottom:15px; color:#92400e; }
+        .aviso { background: #d1fae5; padding: 8px; border-radius: 8px; text-align:center; font-weight:500; margin-bottom:15px; color:#065f46; }
 
         @media (max-width: 768px) {
             .grid-lista { grid-template-columns: 1fr; }
-            .grid-horas { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -349,8 +348,8 @@
 
         <!-- SECCIÓN: CARGA DE DATOS -->
         <section id="carga" class="tab-content card hidden">
-            <h2><i class="fa fa-pen-to-square"></i> Registrar Capturas</h2>
-            <div class="aviso">ℹ️ Podés cargar hora por hora cuando quieras, se suma automáticamente a lo guardado.</div>
+            <h2><i class="fa fa-pen-to-square"></i> Registrar / Corregir Capturas</h2>
+            <div class="aviso">ℹ️ Al volver a guardar, se reemplazan los valores anteriores para corregir errores.</div>
             <div class="fila-form">
                 <div style="flex:1; min-width:200px;">
                     <label style="display:block; font-size:14px; font-weight:500; margin-bottom:8px; color:#475569;">Seleccionar Etapa</label>
@@ -363,7 +362,7 @@
             </div>
 
             <div id="horasContainer" class="grid-horas"></div>
-            <button id="btnGuardarCapturas" class="btn-secundario">💾 Guardar Registro / Sumar</button>
+            <button id="btnGuardarCapturas" class="btn-secundario">💾 Guardar / Corregir Registro</button>
         </section>
 
         <!-- SECCIÓN: RESULTADOS POR ETAPA -->
@@ -379,8 +378,8 @@
                             <th class="text-center">Puesto</th>
                             <th>Pescador</th>
                             <th class="text-center">Hora 1</th>
-                            <th class="text-center">Hora 2</th>
-                            <th class="text-center">Hora 3</th>
+                            <th class="text-center hora-columna h2-col">Hora 2</th>
+                            <th class="text-center hora-columna h3-col">Hora 3</th>
                             <th class="text-center">Total</th>
                             <th class="text-center">Puntos</th>
                         </tr>
@@ -423,23 +422,10 @@
         let capturas = {};
 
         // ✅ COEFICIENTES SEGÚN TU REGLA EXACTA
-        // Puesto desde el último hacia arriba : Coeficiente acumulado
         const coeficientes = {
-            1: 0.0001, // Último
-            2: 0.0003, // 1 + 2
-            3: 0.0006, // 1 + 2 + 3
-            4: 0.0010, // 1 + 2 + 3 + 4
-            5: 0.0015, // 1 + 2 + 3 + 4 + 5
-            6: 0.0021,
-            7: 0.0028,
-            8: 0.0036,
-            9: 0.0045,
-            10: 0.0055,
-            11: 0.0066,
-            12: 0.0078,
-            13: 0.0091,
-            14: 0.0105,
-            15: 0.0120
+            1: 0.0001, 2: 0.0003, 3: 0.0006, 4: 0.0010, 5: 0.0015,
+            6: 0.0021, 7: 0.0028, 8: 0.0036, 9: 0.0045, 10: 0.0055,
+            11: 0.0066, 12: 0.0078, 13: 0.0091, 14: 0.0105, 15: 0.0120
         };
 
         // ELEMENTOS DOM
@@ -463,6 +449,10 @@
         const etapaClasifSel = document.getElementById('etapaClasifSel');
         const tablaClasifEtapa = document.getElementById('tablaClasifEtapa');
         const tablaGeneral = document.getElementById('tablaGeneral');
+
+        // Elementos para ocultar columnas
+        const colH2 = document.querySelectorAll('.h2-col');
+        const colH3 = document.querySelectorAll('.h3-col');
 
         // --------------------------
         // NAVEGACIÓN
@@ -515,7 +505,7 @@
             if(nom) {
                 const id = Date.now().toString();
                 etapas.push({id, nombre: nom, horas: hrs});
-                capturas[id] = []; // Iniciamos el registro vacío
+                capturas[id] = [];
                 actualizarListaEtapas();
                 actualizarSelectores();
                 guardarEnLocal();
@@ -541,14 +531,22 @@
         }
 
         // --------------------------
-        // CARGA DE HORAS (CARGA PARCIAL / SUMA)
+        // CARGA DE HORAS (CORREGIR / REEMPLAZAR, NO SUMA)
         // --------------------------
         etapaSel.addEventListener('change', () => {
             const etapa = etapas.find(e => e.id === etapaSel.value);
             horasContainer.innerHTML = '';
+            
+            // Ocultar/Mostrar columnas en tabla según horas
+            if(etapa && etapa.horas === 2) {
+                colH3.forEach(c => c.classList.add('hidden'));
+            } else {
+                colH3.forEach(c => c.classList.remove('hidden'));
+            }
+
             if(!etapa) return;
 
-            // Creamos los campos para cada hora
+            // Creamos campos SÓLO hasta la hora que corresponde
             for(let i=1; i<=etapa.horas; i++) {
                 const div = document.createElement('div');
                 div.className = "hora-item";
@@ -561,22 +559,17 @@
         });
 
         pescadorSel.addEventListener('change', () => {
-            // Si cambia el pescador, mostramos lo que ya tiene cargado para modificar o sumar
+            // Cargar valores existentes para poder corregirlos
             const idEtapa = etapaSel.value;
             const pesc = pescadorSel.value;
             if(!idEtapa || !pesc) return;
             
             const registroExistente = capturas[idEtapa].find(r => r.pescador === pesc);
             if(registroExistente) {
-                for(let i=1; i<=3; i++) {
-                    const input = document.querySelector(`input[data-hora="${i}"]`);
-                    if(input && registroExistente[`h${i}`] !== undefined) {
-                        input.value = registroExistente[`h${i}`];
-                    }
-                }
-            } else {
-                // Si no tiene nada, ponemos todo en 0
-                document.querySelectorAll('input[data-hora]').forEach(inp => inp.value = 0);
+                document.querySelectorAll('input[data-hora]').forEach(inp => {
+                    const hora = inp.dataset.hora;
+                    inp.value = registroExistente[hora] || 0;
+                });
             }
         });
 
@@ -585,43 +578,36 @@
             const pesc = pescadorSel.value;
             if(!idEtapa || !pesc) return alert('⚠️ Complete los datos');
 
-            const etapa = etapas.find(e => e.id === idEtapa);
             const horasNuevas = {};
-            
-            // Leemos lo ingresado ahora
             document.querySelectorAll('.input-bonito[data-hora]').forEach(inp => {
                 horasNuevas[`h${inp.dataset.hora}`] = parseInt(inp.value) || 0;
             });
 
-            // 👉 LÓGICA DE SUMA: Si ya existe, sumamos lo nuevo a lo viejo, sino creamos
-            let registroFinal = { pescador: pesc, h1:0, h2:0, h3:0 };
+            // ✅ AHORA REEMPLAZA, NO SUMA
             const idx = capturas[idEtapa].findIndex(r => r.pescador === pesc);
+            const total = Object.values(horasNuevas).reduce((a,b) => a+b, 0);
             
             if(idx >= 0) {
-                // Ya existe: SUMAMOS
-                registroFinal.h1 = capturas[idEtapa][idx].h1 + horasNuevas.h1;
-                registroFinal.h2 = capturas[idEtapa][idx].h2 + horasNuevas.h2;
-                registroFinal.h3 = capturas[idEtapa][idx].h3 + horasNuevas.h3;
-                capturas[idEtapa][idx] = registroFinal;
+                // Reemplazamos todo el registro
+                capturas[idEtapa][idx] = { pescador: pesc, ...horasNuevas, total };
             } else {
-                // Es nuevo: Guardamos directo
-                registroFinal = {...registroFinal, ...horasNuevas};
-                capturas[idEtapa].push(registroFinal);
+                // Creamos nuevo
+                capturas[idEtapa].push({ pescador: pesc, ...horasNuevas, total });
             }
 
-            // Recalculamos el TOTAL
-            registroFinal.total = registroFinal.h1 + registroFinal.h2 + registroFinal.h3;
-
             guardarEnLocal();
-            alert('✅ Guardado / Sumado correctamente');
+            alert('✅ Registro guardado / corregido correctamente');
         });
 
         // --------------------------
-        // LÓGICA DE PUNTAJES CORREGIDA AL 100%
+        // LÓGICA DE PUNTAJES
         // --------------------------
         etapaClasifSel.addEventListener('change', () => {
             const idEtapa = etapaClasifSel.value;
-            if(!idEtapa) return tablaClasifEtapa.innerHTML = '<tr><td colspan="7" class="text-center" style="color:#94a3b8;">Seleccione una etapa</td></tr>';
+            if(!idEtapa) {
+                tablaClasifEtapa.innerHTML = '<tr><td colspan="7" class="text-center" style="color:#94a3b8;">Seleccione una etapa</td></tr>';
+                return;
+            }
 
             const etapa = etapas.find(e => e.id === idEtapa);
             let datos = [...capturas[idEtapa]];
@@ -629,7 +615,14 @@
 
             if(totalParticipantes === 0) return;
 
-            // 1. ORDENAMIENTO DE MAYOR A MENOR (REGLAS DE DESEMPATE)
+            // Ocultar columna Hora 3 si es etapa de 2 horas
+            if(etapa.horas === 2) {
+                colH3.forEach(c => c.classList.add('hidden'));
+            } else {
+                colH3.forEach(c => c.classList.remove('hidden'));
+            }
+
+            // 1. ORDENAMIENTO: Mayor a menor con desempate
             datos.sort((a,b) => {
                 if(b.total !== a.total) return b.total - a.total;
                 const ultH = etapa.horas === 3 ? 'h3' : 'h2';
@@ -638,7 +631,7 @@
                 return b.h1 - a.h1;
             });
 
-            // 2. ASIGNACIÓN DE PUESTOS (CON SALTO POR EMPATE)
+            // 2. ASIGNACIÓN DE PUESTOS Y PUNTOS
             let resultadoFinal = [];
             let puestoActual = 1;
 
@@ -647,24 +640,14 @@
                     const ant = datos[i-1];
                     const act = datos[i];
                     const ultH = etapa.horas === 3 ? 'h3' : 'h2';
-                    
-                    // Si hay empate total, mismo puesto
-                    if(act.total === ant.total && act[ultH] === ant[ultH] && act.h2 === ant.h2 && act.h1 === ant.h1) {
-                        puestoActual = resultadoFinal[i-1].puesto;
-                    } else {
+                    if(!(act.total === ant.total && act[ultH] === ant[ultH] && act.h2 === ant.h2 && act.h1 === ant.h1)) {
                         puestoActual = i + 1;
                     }
                 }
 
-                // 👉 CÁLCULO SEGÚN TU REGLA EXACTA 👈
-                // Parte Entera = Cantidad total - (Puesto - 1)
+                // Cálculo exacto: Parte entera = Total - (puesto - 1)
                 const parteEntera = totalParticipantes - (puestoActual - 1);
-                
-                // Buscamos el coeficiente: Puesto desde el último = Parte Entera
-                const coef = coeficientes[parteEntera] || 0.0001; // Si hay más de 15, usamos el último valor base
-                
-                // Punto final: Entero + Coeficiente
-                const puntosFinales = parteEntera + coef;
+                const puntosFinales = parteEntera + (coeficientes[parteEntera] || 0.0001);
 
                 resultadoFinal.push({...datos[i], puesto: puestoActual, puntos: puntosFinales});
             }
@@ -681,8 +664,8 @@
                     <td class="text-center" style="font-size:18px; font-weight:bold;">${res.puesto}</td>
                     <td style="font-weight:500;">${res.pescador}</td>
                     <td class="text-center">${res.h1}</td>
-                    <td class="text-center">${res.h2 || '-'}</td>
-                    <td class="text-center">${res.h3 || '-'}</td>
+                    <td class="text-center">${res.h2}</td>
+                    <td class="text-center ${etapa.horas === 2 ? 'hidden' : ''}">${res.h3 || 0}</td>
                     <td class="text-center text-primary">${res.total}</td>
                     <td class="text-center" style="font-family:monospace; color:#0E7490; font-weight:600;">${res.puntos.toFixed(4)}</td>
                 `;
@@ -693,7 +676,7 @@
         });
 
         // --------------------------
-        // CLASIFICACIÓN GENERAL
+        // CLASIFICACIÓN GENERAL (DESCENDENTE: MÁS PUNTOS ARRIBA)
         // --------------------------
         function actualizarClasificacionGeneral() {
             let acumulado = {};
@@ -724,7 +707,6 @@
                         }
                     }
                     
-                    // MISMA LÓGICA DE CÁLCULO PARA LA GENERAL
                     const parteEntera = totalParticipantes - (puestoActual - 1);
                     const puntosFinales = parteEntera + (coeficientes[parteEntera] || 0.0001);
 
@@ -735,14 +717,16 @@
                 }
             });
 
+            // ✅ ORDEN DESCENDENTE: Mayor puntaje primero
             const ranking = Object.entries(acumulado)
                 .map(([nombre, datos]) => ({nombre, ...datos}))
-                .sort((a,b) => a.total - b.total);
+                .sort((a,b) => b.total - a.total); // <-- CAMBIO AQUÍ
 
             tablaGeneral.innerHTML = '';
             ranking.forEach((pos, idx) => {
                 const fila = document.createElement('tr');
-                if(idx === 0) fila.className = "puesto-1";
+                if(idx === 0 && pos.total > 0) fila.className = "puesto-1"; // El primero es el ganador
+
                 fila.innerHTML = `
                     <td class="text-center" style="font-size:18px; font-weight:bold;">${idx+1}</td>
                     <td style="font-weight:500;">${pos.nombre}</td>
